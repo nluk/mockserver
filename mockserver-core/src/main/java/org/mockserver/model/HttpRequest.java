@@ -39,6 +39,8 @@ public class HttpRequest extends RequestDefinition implements HttpMessage<HttpRe
     private List<X509Certificate> clientCertificateChain;
     private SocketAddress socketAddress;
     private String localAddress;
+
+    private Integer localPort = null;
     private String remoteAddress;
 
     public static HttpRequest request() {
@@ -220,6 +222,16 @@ public class HttpRequest extends RequestDefinition implements HttpMessage<HttpRe
 
     public String getLocalAddress() {
         return localAddress;
+    }
+
+    public HttpRequest withLocalPort(Integer localPort) {
+        this.localPort = localPort;
+        this.hashCode = 0;
+        return this;
+    }
+
+    public Integer getLocalPort() {
+        return localPort;
     }
 
     public HttpRequest withRemoteAddress(String remoteAddress) {
@@ -1160,6 +1172,7 @@ public class HttpRequest extends RequestDefinition implements HttpMessage<HttpRe
             .withClientCertificateChain(clientCertificateChain)
             .withSocketAddress(socketAddress)
             .withLocalAddress(localAddress)
+            .withLocalPort(localPort)
             .withRemoteAddress(remoteAddress);
     }
 
@@ -1180,6 +1193,7 @@ public class HttpRequest extends RequestDefinition implements HttpMessage<HttpRe
             .withClientCertificateChain(clientCertificateChain != null && !clientCertificateChain.isEmpty() ? clientCertificateChain.stream().map(X509Certificate::clone).collect(Collectors.toList()) : null)
             .withSocketAddress(socketAddress)
             .withLocalAddress(localAddress)
+            .withLocalPort(localPort)
             .withRemoteAddress(remoteAddress);
     }
 

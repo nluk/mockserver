@@ -399,6 +399,8 @@ components:
           $ref: "#/components/schemas/SocketAddress"
         protocol:
           $ref: "#/components/schemas/Protocol"
+        localPort:
+            type: integer
     OpenAPIDefinition:
       description: "open api or swagger request matcher"
       type: object

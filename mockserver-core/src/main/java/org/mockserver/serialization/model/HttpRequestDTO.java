@@ -24,6 +24,8 @@ public class HttpRequestDTO extends RequestDefinitionDTO implements DTO<HttpRequ
     private List<X509Certificate> clientCertificateChain;
     private SocketAddress socketAddress;
     private String localAddress;
+
+    private Integer localPort;
     private String remoteAddress;
 
     public HttpRequestDTO() {
@@ -46,6 +48,7 @@ public class HttpRequestDTO extends RequestDefinitionDTO implements DTO<HttpRequ
             clientCertificateChain = httpRequest.getClientCertificateChain();
             socketAddress = httpRequest.getSocketAddress();
             localAddress = httpRequest.getLocalAddress();
+            localPort = httpRequest.getLocalPort();
             remoteAddress = httpRequest.getRemoteAddress();
         }
     }
@@ -65,6 +68,7 @@ public class HttpRequestDTO extends RequestDefinitionDTO implements DTO<HttpRequ
             .withClientCertificateChain(clientCertificateChain)
             .withSocketAddress(socketAddress)
             .withLocalAddress(localAddress)
+            .withLocalPort(localPort)
             .withRemoteAddress(remoteAddress)
             .withNot(getNot());
     }
@@ -183,6 +187,15 @@ public class HttpRequestDTO extends RequestDefinitionDTO implements DTO<HttpRequ
 
     public HttpRequestDTO setLocalAddress(String localAddress) {
         this.localAddress = localAddress;
+        return this;
+    }
+
+    public Integer getLocalPort() {
+        return localPort;
+    }
+
+    public HttpRequestDTO setLocalPort(Integer localPort) {
+        this.localPort = localPort;
         return this;
     }
 

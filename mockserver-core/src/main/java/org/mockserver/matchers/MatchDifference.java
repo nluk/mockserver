@@ -25,6 +25,7 @@ public class MatchDifference {
         BODY("body"),
         SECURE("secure"),
         PROTOCOL("protocol"),
+        LOCAL_PORT("localPort"),
         KEEP_ALIVE("keep-alive"),
         OPERATION("operation"),
         OPENAPI("openapi");

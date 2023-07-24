@@ -26,6 +26,7 @@ import static org.mockserver.character.Character.NEW_LINE;
 import static org.mockserver.log.model.LogEntry.LogMessageType.EXPECTATION_MATCHED;
 import static org.mockserver.log.model.LogEntry.LogMessageType.EXPECTATION_NOT_MATCHED;
 import static org.mockserver.matchers.MatchDifference.Field.*;
+import static org.mockserver.matchers.MatchDifference.Field.LOCAL_PORT;
 import static org.mockserver.model.NottableString.string;
 
 /**
@@ -55,6 +56,8 @@ public class HttpRequestPropertiesMatcher extends AbstractHttpRequestMatcher {
     private BooleanMatcher keepAliveMatcher = null;
     private BooleanMatcher sslMatcher = null;
     private ExactStringMatcher protocolMatcher = null;
+
+    private IntegerMatcher localPortMatcher = null;
     private ObjectMapper objectMapperWithStrictBodyDTODeserializer;
     private JsonSchemaBodyDecoder jsonSchemaBodyParser;
     private MatcherBuilder matcherBuilder;
@@ -91,6 +94,7 @@ public class HttpRequestPropertiesMatcher extends AbstractHttpRequestMatcher {
                 withKeepAlive(httpRequest.isKeepAlive());
                 withSsl(httpRequest.isSecure());
                 withProtocol(httpRequest.getProtocol());
+                withLocalPort(httpRequest.getLocalPort());
                 this.jsonSchemaBodyParser = new JsonSchemaBodyDecoder(configuration, mockServerLogger, expectation, httpRequest);
             }
             return true;
@@ -199,6 +203,10 @@ public class HttpRequestPropertiesMatcher extends AbstractHttpRequestMatcher {
 
     private void withProtocol(Protocol protocol) {
         this.protocolMatcher = new ExactStringMatcher(mockServerLogger, protocol != null ? string(protocol.name()) : null);
+    }
+
+    private void withLocalPort(Integer localPort){
+        this.localPortMatcher = new IntegerMatcher(mockServerLogger, localPort);
     }
 
     public boolean matches(final MatchDifference context, final RequestDefinition requestDefinition) {
@@ -344,6 +352,11 @@ public class HttpRequestPropertiesMatcher extends AbstractHttpRequestMatcher {
 
                     boolean protocolMatches = matches(PROTOCOL, context, protocolMatcher, request.getProtocol() != null ? string(request.getProtocol().name()) : null);
                     if (failFast(protocolMatcher, context, matchDifferenceCount, becauseBuilder, protocolMatches, PROTOCOL)) {
+                        return false;
+                    }
+
+                    boolean localPortMatches = matches(LOCAL_PORT, context, localPortMatcher, request.getLocalPort());
+                    if (failFast(localPortMatcher, context, matchDifferenceCount, becauseBuilder, localPortMatches, LOCAL_PORT)) {
                         return false;
                     }
 

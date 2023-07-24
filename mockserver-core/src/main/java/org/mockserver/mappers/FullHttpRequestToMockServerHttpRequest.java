@@ -92,6 +92,7 @@ public class FullHttpRequestToMockServerHttpRequest {
         }
         if (localAddress instanceof InetSocketAddress) {
             httpRequest.withLocalAddress(StringUtils.removeStart(localAddress.toString(), "/"));
+            httpRequest.withLocalPort(((InetSocketAddress) localAddress).getPort());
         }
     }
 

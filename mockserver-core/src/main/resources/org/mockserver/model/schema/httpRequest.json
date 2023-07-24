@@ -39,6 +39,9 @@
     "localAddress": {
       "type": "string"
     },
+    "localPort": {
+      "type": "integer"
+    },
     "remoteAddress": {
       "type": "string"
     },

@@ -43,6 +43,7 @@ public class RequestDefinitionDTODeserializer extends StdDeserializer<RequestDef
             SocketAddress socketAddress = null;
             String specUrlOrPayload = null;
             String operationId = null;
+            Integer localPort = null;
             while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
                 String fieldName = jsonParser.getCurrentName();
                 if (fieldName != null) {
@@ -132,6 +133,11 @@ public class RequestDefinitionDTODeserializer extends StdDeserializer<RequestDef
                             operationId = ctxt.readValue(jsonParser, String.class);
                             break;
                         }
+                        case "localPort": {
+                            jsonParser.nextToken();
+                            localPort = ctxt.readValue(jsonParser, Integer.class);
+                            break;
+                        }
                     }
                 }
             }
@@ -153,6 +159,7 @@ public class RequestDefinitionDTODeserializer extends StdDeserializer<RequestDef
                     .setSecure(secure)
                     .setProtocol(protocol)
                     .setSocketAddress(socketAddress)
+                    .setLocalPort(localPort)
                     .setNot(not);
             }
         }

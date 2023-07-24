@@ -60,6 +60,9 @@ public class HttpRequestSerializer extends StdSerializer<HttpRequest> {
         if (isNotBlank(httpRequest.getLocalAddress())) {
             jgen.writeObjectField("localAddress", httpRequest.getLocalAddress());
         }
+        if (httpRequest.getLocalPort() != null){
+            jgen.writeObjectField("localPort", httpRequest.getLocalPort());
+        }
         if (isNotBlank(httpRequest.getRemoteAddress())) {
             jgen.writeObjectField("remoteAddress", httpRequest.getRemoteAddress());
         }
